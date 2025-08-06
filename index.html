@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Company Phone Directory</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .search-box {
+      max-width: 400px;
+      margin: 0 auto 30px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .directory {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      width: 280px;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      color: #222;
+    }
+
+    .info {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 6px;
+    }
+
+    .email {
+      color: #0077cc;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <h1>📞 Company Phone Directory</h1>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search by name or department...">
+  </div>
+
+  <div class="directory" id="directory">
+    <!-- Cards will go here -->
+  </div>
+
+  <script>
+    const employees = [
+      {
+        name: "Abraham Manda",
+        extension: "101",
+        email: "abraham@company.com",
+        department: "IT Support"
+      },
+      {
+        name: "Lilian Mwansa",
+        extension: "102",
+        email: "lilian@company.com",
+        department: "Finance"
+      },
+      {
+        name: "James Banda",
+        extension: "103",
+        email: "james@company.com",
+        department: "Human Resources"
+      },
+      {
+        name: "Chileshe Phiri",
+        extension: "104",
+        email: "chileshe@company.com",
+        department: "Procurement"
+      },
+      {
+        name: "Thandiwe Zulu",
+        extension: "105",
+        email: "thandiwe@company.com",
+        department: "Marketing"
+      }
+    ];
+
+    const directory = document.getElementById('directory');
+    const searchInput = document.getElementById('searchInput');
+
+    function renderEmployees(filter = "") {
+      directory.innerHTML = "";
+
+      const filtered = employees.filter(emp => {
+        const keyword = filter.toLowerCase();
+        return (
+          emp.name.toLowerCase().includes(keyword) ||
+          emp.department.toLowerCase().includes(keyword)
+        );
+      });
+
+      filtered.forEach(emp => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <h2>${emp.name}</h2>
+          <div class="info"><strong>Extension:</strong> ${emp.extension}</div>
+          <div class="info email"><strong>Email:</strong> <a href="mailto:${emp.email}">${emp.email}</a></div>
+          <div class="info"><strong>Department:</strong> ${emp.department}</div>
+        `;
+        directory.appendChild(card);
+      });
+    }
+
+    searchInput.addEventListener("input", (e) => {
+      renderEmployees(e.target.value);
+    });
+
+    renderEmployees();
+  </script>
+</body>
+</html>
