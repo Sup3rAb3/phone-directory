@@ -6,7 +6,6 @@
   <title>CLP Directory</title>
   <style>
     :root {
-      /* Restored Color Palette */
       --grad-start: rgb(2, 3, 129);
       --grad-end: #0a0c4d;
       --glass-bg: rgba(255, 255, 255, 0.08);
@@ -35,9 +34,21 @@
       padding-top: 20px;
     }
 
+    /* Logo Styling */
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px; /* Space between the two logos */
+      margin-bottom: 20px;
+    }
+    .logo {
+      max-height: 60px; /* Keeps logos from getting too big */
+      width: auto;
+    }
+
     h1 { font-size: 34px; font-weight: 700; margin-bottom: 20px; letter-spacing: -0.5px; text-align: center; }
 
-    /* Modern Search Bar */
     .search-wrapper {
       position: sticky;
       top: 10px;
@@ -61,7 +72,6 @@
 
     input::placeholder { color: rgba(255, 255, 255, 0.5); }
 
-    /* iOS List Grouping */
     .dept-section {
       background: var(--glass-bg);
       border-radius: 16px;
@@ -97,11 +107,10 @@
     }
 
     .dept-section.active .dept-content {
-      max-height: 3000px; /* Increased height for full list */
+      max-height: 3000px;
       transition: max-height 0.4s ease-in-out;
     }
 
-    /* Employee Item Row */
     .employee-item {
       padding: 16px 20px;
       border-bottom: 1px solid var(--border);
@@ -119,6 +128,11 @@
 <body>
 
   <div class="container">
+    <div class="logo-container">
+      <img src="images/logo-official-1.png" alt="Company Logo" class="logo">
+      <img src="images/CGCSO-logo-HD.png" alt="CGCSO Logo" class="logo">
+    </div>
+
     <h1>Phone Directory</h1>
 
     <div class="search-wrapper">
