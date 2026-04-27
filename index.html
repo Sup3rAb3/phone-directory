@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CLP Directory</title>
+  <title>Corporate Directory</title>
   <style>
     :root {
       --grad-start: rgb(2, 3, 129);
@@ -28,100 +28,36 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      padding-top: 20px;
-    }
+    .container { max-width: 600px; margin: 0 auto; padding-top: 20px; }
 
     /* Logo Styling */
-    .logo-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 20px; /* Space between the two logos */
-      margin-bottom: 20px;
-    }
-    .logo {
-      max-height: 60px; /* Keeps logos from getting too big */
-      width: auto;
-    }
+    .logo-container { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 20px; }
+    .logo { max-height: 60px; width: auto; }
 
-    h1 { font-size: 34px; font-weight: 700; margin-bottom: 20px; letter-spacing: -0.5px; text-align: center; }
+    /* Company Switcher Tabs */
+    .switcher { display: flex; background: var(--glass-bg); padding: 4px; border-radius: 12px; margin-bottom: 24px; border: 1px solid var(--border); }
+    .tab { flex: 1; padding: 12px; text-align: center; cursor: pointer; border-radius: 8px; font-weight: 600; transition: all 0.3s ease; color: var(--text-secondary); }
+    .tab.active { background: var(--accent); color: white; }
 
-    .search-wrapper {
-      position: sticky;
-      top: 10px;
-      z-index: 10;
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px);
-      border-radius: 12px;
-      margin-bottom: 24px;
-      border: 1px solid var(--border);
-    }
+    h1 { font-size: 34px; font-weight: 700; margin-bottom: 20px; text-align: center; }
 
-    input {
-      width: 100%;
-      background: transparent;
-      border: none;
-      padding: 14px 20px;
-      color: white;
-      font-size: 17px;
-      outline: none;
-    }
-
+    .search-wrapper { position: sticky; top: 10px; z-index: 10; background: var(--glass-bg); backdrop-filter: blur(20px); border-radius: 12px; margin-bottom: 24px; border: 1px solid var(--border); }
+    input { width: 100%; background: transparent; border: none; padding: 14px 20px; color: white; font-size: 17px; outline: none; }
     input::placeholder { color: rgba(255, 255, 255, 0.5); }
 
-    .dept-section {
-      background: var(--glass-bg);
-      border-radius: 16px;
-      margin-bottom: 24px;
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border);
-      overflow: hidden;
-    }
-
-    .dept-header {
-      padding: 16px 20px;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 600;
-      font-size: 18px;
-    }
-
-    .chevron {
-      transition: transform 0.3s ease;
-      color: var(--text-secondary);
-      font-size: 14px;
-    }
-
+    /* Dropdown Styles */
+    .dept-section { background: var(--glass-bg); border-radius: 16px; margin-bottom: 16px; backdrop-filter: blur(10px); border: 1px solid var(--border); overflow: hidden; }
+    .dept-header { padding: 16px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 18px; }
+    .chevron { transition: transform 0.3s ease; color: var(--text-secondary); font-size: 14px; }
     .dept-section.active .chevron { transform: rotate(180deg); }
+    .dept-content { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0, 1, 0, 1); border-top: 1px solid var(--border); }
+    .dept-section.active .dept-content { max-height: 3000px; transition: max-height 0.4s ease-in-out; }
 
-    .dept-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
-      border-top: 1px solid var(--border);
-    }
-
-    .dept-section.active .dept-content {
-      max-height: 3000px;
-      transition: max-height 0.4s ease-in-out;
-    }
-
-    .employee-item {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border);
-    }
-
+    .employee-item { padding: 16px 20px; border-bottom: 1px solid var(--border); }
     .employee-item:last-child { border-bottom: none; }
-
-    .emp-name { font-weight: 500; font-size: 16px; display: block; margin-bottom: 2px; }
+    .emp-name { font-weight: 500; display: block; margin-bottom: 2px; }
     .emp-info { font-size: 14px; color: var(--text-secondary); }
     .emp-link { color: var(--accent); text-decoration: none; display: block; margin-top: 4px; font-size: 14px; }
-
     #noResults { text-align: center; margin-top: 40px; color: var(--text-secondary); display: none; }
   </style>
 </head>
@@ -129,11 +65,16 @@
 
   <div class="container">
     <div class="logo-container">
-      <img src="images/logo-official-1.png" alt="Company Logo" class="logo">
-      <img src="images/CGCSo-Logo-HD.png" alt="CGCSo Logo" class="logo">
+      <img src="images/logo-official-1.png" alt="CLP" class="logo">
+      <img src="images/CGCSo-Logo-HD.png" alt="CGCSO" class="logo">
     </div>
 
     <h1>Phone Directory</h1>
+
+    <div class="switcher">
+      <div class="tab active" id="tab-CLP" onclick="setCompany('CLP')">CLP</div>
+      <div class="tab" id="tab-CGCSO" onclick="setCompany('CGCSO')">CGCSO</div>
+    </div>
 
     <div class="search-wrapper">
       <input type="text" id="searchInput" placeholder="Search names or extensions">
@@ -145,68 +86,112 @@
 
   <script>
     const employees = [
-      { name: "Lupiya Simusokwe", extension: "2325", email: "lsimusokwe@corpus.co.zm", department: "Banking and Finance" },
-      { name: "Sankananji Mubanga", extension: "2381", email: "smubanga@corpus.co.zm", department: "Banking and Finance" },
-      { name: "Grace Kampembwa Longwe", extension: "2324", email: "glongwe@corpus.co.zm", department: "Banking and Finance" },
-      { name: "Judith Mukololo", extension: "2379", email: "jmukololo@corpus.co.zm", department: "Banking and Finance" },
-      { name: "Jackie Jhala", extension: "2313", email: "jjhala@corpus.co.zm", department: "Corporate Advisory" },
-      { name: "Coleen Namuyamba", extension: "2359", email: "cnamuyamba@corpus.co.zm", department: "Corporate Advisory" },
-      { name: "Christine Mwambazi", extension: "2340", email: "cmwambazi@corpus.co.zm", department: "Corporate Advisory" },
-      { name: "Dalitso Ng'ona", extension: "2366", email: "dng'ona@corpus.co.zm", department: "Corporate Advisory" },
-      { name: "Sydney Chisenga", extension: "2303", email: "schisenga@corpus.co.zm", department: "Dispute Resolution & Public Policy" },
-      { name: "Martha Siwale Namwila", extension: "2360", email: "mnamwila@corpus.co.zm", department: "Dispute Resolution & Public Policy" },
-      { name: "Francis Muzimu", extension: "2342", email: "fmuzimu@corpus.co.zm", department: "Dispute Resolution & Public Policy" },
-      { name: "Kawana Kawana", extension: "2356", email: "kkawana@corpus.co.zm", department: "Dispute Resolution & Public Policy" },
-      { name: "Peter Langa Banda", extension: "2324", email: "pbanda@corpus.co.zm", department: "Dispute Resolution & Public Policy" },
-      { name: "Salifyanji Simwanza", extension: "2351", email: "ssimwanza@corpus.co.zm", department: "Dispute Resolution & Public Policy" },
-      { name: "Kudatha Sakala", extension: "2330", email: "ksakala@corpus.co.zm", department: "Dispute Resolution & Public Policy" },
-      { name: "Jemimah Banda", extension: "2346", email: "jbanda@corpus.co.zm", department: "Dispute Resolution & Public Policy" },
-      { name: "Charles Mkokweza", extension: "2302", email: "cmkokweza@corpus.co.zm", department: "Energy, Resources & Infrastructure" },
-      { name: "Rabecca Banda", extension: "2314", email: "rbanda@corpus.co.zm", department: "Energy, Resources & Infrastructure" },
-      { name: "Clarence Chama", extension: "2305", email: "cchama@corpus.co.zm", department: "Energy, Resources & Infrastructure" },
-      { name: "Chifunilo Chikoya", extension: "2377", email: "cchikoya@corpus.co.zm", department: "Energy, Resources & Infrastructure" },
-      { name: "Suwilanji Namumba", extension: "2328", email: "snamumba@corpus.co.zm", department: "Energy, Resources & Infrastructure" },
-      { name: "Mulenga Chilesha", extension: "2361", email: "mchilesha@corpus.co.zm", department: "Energy, Resources & Infrastructure" },
-      { name: "Murray Mulala", extension: "2362", email: "mmulala@corpus.co.zm", department: "Energy, Resources & Infrastructure" },
-      { name: "Chota Katongo", extension: "2341", email: "ckatongo@corpus.co.zm", department: "Business Development" },
-      { name: "Taizya Munyenyembe", extension: "2339", email: "tmunyenyembe@corpus.co.zm", department: "Business Development" },
-      { name: "Lackson Mukuma", extension: "2343", email: "lmukuma@corpus.co.zm", department: "Administration" },
-      { name: "Julius Chanda", extension: "2310", email: "jchanda@corpus.co.zm", department: "Administration" },
-      { name: "Besa Mwansa", extension: "2301", email: "bmwansa@corpus.co.zm", department: "Administration" },
-      { name: "Beauty Chanda", extension: "2300", email: "bchanda@corpus.co.zm", department: "Administration" },
-      { name: "Emmanuel Bosulu", extension: "2320", email: "ebosulu@corpus.co.zm", department: "IT" },
-      { name: "Abraham Manda", extension: "2357", email: "amanda@corpus.co.zm", department: "IT" },
-      { name: "Boardroom", extension: "2335", department: "Meeting Rooms" },
-      { name: "Meeting Room 1", extension: "2350", department: "Meeting Rooms" },
-      { name: "Meeting Room 2", extension: "2373", department: "Meeting Rooms" },
-      { name: "Mary Banda", extension: "2331", email: "mbanda@corpus.co.zm", department: "Client Care" },
-      { name: "Patience Daka", extension: "2348", email: "pdaka@corpus.co.zm", department: "Client Care" },
-      { name: "Dickson Chileshe", extension: "2319", email: "dchileshe@corpus.co.zm", department: "Client Care" },
-      { name: "Paul Chafwa", extension: "2370", email: "pchafwa@corpus.co.zm", department: "Finance" },
-      { name: "Mwananyanda Mwala", extension: "2307", email: "mmwala@corpus.co.zm", department: "Finance" },
-      { name: "Crosby Mwelwa", extension: "2316", email: "cmwelwa@corpus.co.zm", department: "Finance" },
-      { name: "Richard Mutemwa", extension: "2349", email: "rmutemwa@corpus.co.zm", department: "Finance" }
+      // CLP Data
+      { name: "Lupiya Simusokwe", extension: "2325", email: "lsimusokwe@corpus.co.zm", department: "Banking and Finance", company: "CLP" },
+      { name: "Sankananji Mubanga", extension: "2381", email: "smubanga@corpus.co.zm", department: "Banking and Finance", company: "CLP" },
+      { name: "Grace Kampembwa Longwe", extension: "2324", email: "glongwe@corpus.co.zm", department: "Banking and Finance", company: "CLP" },
+      { name: "Judith Mukololo", extension: "2379", email: "jmukololo@corpus.co.zm", department: "Banking and Finance", company: "CLP" },
+      { name: "Jackie Jhala", extension: "2313", email: "jjhala@corpus.co.zm", department: "Corporate Advisory", company: "CLP" },
+      { name: "Coleen Namuyamba", extension: "2359", email: "cnamuyamba@corpus.co.zm", department: "Corporate Advisory", company: "CLP" },
+      { name: "Christine Mwambazi", extension: "2340", email: "cmwambazi@corpus.co.zm", department: "Corporate Advisory", company: "CLP" },
+      { name: "Dalitso Ng'ona", extension: "2366", email: "dng'ona@corpus.co.zm", department: "Corporate Advisory", company: "CLP" },
+      { name: "Sydney Chisenga", extension: "2303", email: "schisenga@corpus.co.zm", department: "Dispute Resolution & Public Policy", company: "CLP" },
+      { name: "Martha Siwale Namwila", extension: "2360", email: "mnamwila@corpus.co.zm", department: "Dispute Resolution & Public Policy", company: "CLP" },
+      { name: "Francis Muzimu", extension: "2342", email: "fmuzimu@corpus.co.zm", department: "Dispute Resolution & Public Policy", company: "CLP" },
+      { name: "Kawana Kawana", extension: "2356", email: "kkawana@corpus.co.zm", department: "Dispute Resolution & Public Policy", company: "CLP" },
+      { name: "Peter Langa Banda", extension: "2324", email: "pbanda@corpus.co.zm", department: "Dispute Resolution & Public Policy", company: "CLP" },
+      { name: "Salifyanji Simwanza", extension: "2351", email: "ssimwanza@corpus.co.zm", department: "Dispute Resolution & Public Policy", company: "CLP" },
+      { name: "Kudatha Sakala", extension: "2330", email: "ksakala@corpus.co.zm", department: "Dispute Resolution & Public Policy", company: "CLP" },
+      { name: "Jemimah Banda", extension: "2346", email: "jbanda@corpus.co.zm", department: "Dispute Resolution & Public Policy", company: "CLP" },
+      { name: "Charles Mkokweza", extension: "2302", email: "cmkokweza@corpus.co.zm", department: "Energy, Resources & Infrastructure", company: "CLP" },
+      { name: "Rabecca Banda", extension: "2314", email: "rbanda@corpus.co.zm", department: "Energy, Resources & Infrastructure", company: "CLP" },
+      { name: "Clarence Chama", extension: "2305", email: "cchama@corpus.co.zm", department: "Energy, Resources & Infrastructure", company: "CLP" },
+      { name: "Chifunilo Chikoya", extension: "2377", email: "cchikoya@corpus.co.zm", department: "Energy, Resources & Infrastructure", company: "CLP" },
+      { name: "Suwilanji Namumba", extension: "2328", email: "snamumba@corpus.co.zm", department: "Energy, Resources & Infrastructure", company: "CLP" },
+      { name: "Mulenga Chilesha", extension: "2361", email: "mchilesha@corpus.co.zm", department: "Energy, Resources & Infrastructure", company: "CLP" },
+      { name: "Murray Mulala", extension: "2362", email: "mmulala@corpus.co.zm", department: "Energy, Resources & Infrastructure", company: "CLP" },
+      { name: "Chota Katongo", extension: "2341", email: "ckatongo@corpus.co.zm", department: "Business Development", company: "CLP" },
+      { name: "Taizya Munyenyembe", extension: "2339", email: "tmunyenyembe@corpus.co.zm", department: "Business Development", company: "CLP" },
+      { name: "Lackson Mukuma", extension: "2343", email: "lmukuma@corpus.co.zm", department: "Administration", company: "CLP" },
+      { name: "Julius Chanda", extension: "2310", email: "jchanda@corpus.co.zm", department: "Administration", company: "CLP" },
+      { name: "Besa Mwansa", extension: "2301", email: "bmwansa@corpus.co.zm", department: "Administration", company: "CLP" },
+      { name: "Beauty Chanda", extension: "2300", email: "bchanda@corpus.co.zm", department: "Administration", company: "CLP" },
+      { name: "Emmanuel Bosulu", extension: "2320", email: "ebosulu@corpus.co.zm", department: "IT", company: "CLP" },
+      { name: "Abraham Manda", extension: "2357", email: "amanda@corpus.co.zm", department: "IT", company: "CLP" },
+      { name: "Mary Banda", extension: "2331", email: "mbanda@corpus.co.zm", department: "Client Care", company: "CLP" },
+      { name: "Patience Daka", extension: "2348", email: "pdaka@corpus.co.zm", department: "Client Care", company: "CLP" },
+      { name: "Dickson Chileshe", extension: "2319", email: "dchileshe@corpus.co.zm", department: "Client Care", company: "CLP" },
+      { name: "Paul Chafwa", extension: "2370", email: "pchafwa@corpus.co.zm", department: "Finance", company: "CLP" },
+      { name: "Mwananyanda Mwala", extension: "2307", email: "mmwala@corpus.co.zm", department: "Finance", company: "CLP" },
+      { name: "Crosby Mwelwa", extension: "2316", email: "cmwelwa@corpus.co.zm", department: "Finance", company: "CLP" },
+      { name: "Richard Mutemwa", extension: "2349", email: "rmutemwa@corpus.co.zm", department: "Finance", company: "CLP" },
+      
+      // CGCSO Data
+      { name: "Samaria Lungu", extension: "1101", company: "CGCSO", department: "General" },
+      { name: "Marian", extension: "1102", company: "CGCSO", department: "General" },
+      { name: "Kondwani", extension: "1103", company: "CGCSO", department: "General" },
+      { name: "Carol", extension: "1104", company: "CGCSO", department: "General" },
+      { name: "Prisca", extension: "1105", company: "CGCSO", department: "General" },
+      { name: "Mark", extension: "1106", company: "CGCSO", department: "General" },
+      { name: "Ben", extension: "1107", company: "CGCSO", department: "General" },
+      { name: "Edna", extension: "1108", company: "CGCSO", department: "General" },
+      { name: "Collina", extension: "1109", company: "CGCSO", department: "General" },
+      { name: "Seraiah", extension: "1111", company: "CGCSO", department: "General" },
+      { name: "Ngosa", extension: "1112", company: "CGCSO", department: "General" },
+      { name: "Chilombo", extension: "1113", company: "CGCSO", department: "General" },
+      { name: "Emely", extension: "1114", company: "CGCSO", department: "General" },
+      { name: "Mwenzi", extension: "1116", company: "CGCSO", department: "General" },
+      { name: "Jimmy", extension: "1118", company: "CGCSO", department: "General" },
+      { name: "Emmy Mweemba", extension: "1119", company: "CGCSO", department: "General" },
+      { name: "Beatrice", extension: "1120", company: "CGCSO", department: "General" },
+      { name: "Adrian", extension: "1121", company: "CGCSO", department: "General" },
+      { name: "Bruce", extension: "1122", company: "CGCSO", department: "General" }
     ];
+
+    let currentCompany = 'CLP';
+
+    function setCompany(comp) {
+      currentCompany = comp;
+      // Toggle Tab UI
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById(`tab-${comp}`).classList.add('active');
+      render();
+    }
 
     function render() {
       const keyword = document.getElementById('searchInput').value.toLowerCase();
       const container = document.getElementById('directory');
       container.innerHTML = "";
 
+      // 1. Get ALL matches across companies
+      const allMatches = employees.filter(e => 
+        e.name.toLowerCase().includes(keyword) || 
+        e.extension.includes(keyword) || 
+        e.department.toLowerCase().includes(keyword)
+      );
+
+      // 2. Logic: If matches exist in "other" company but not "current", auto-switch
+      if (keyword.length > 0) {
+        const hasMatchesInCurrent = allMatches.some(e => e.company === currentCompany);
+        const firstMatchInOther = allMatches.find(e => e.company !== currentCompany);
+        
+        if (!hasMatchesInCurrent && firstMatchInOther) {
+          setCompany(firstMatchInOther.company);
+          return; // Exit render, setCompany will trigger a fresh render
+        }
+      }
+
+      // 3. Render filtered items for the active company
+      const filtered = allMatches.filter(e => e.company === currentCompany);
       const grouped = {};
-      employees.forEach(emp => {
+      filtered.forEach(emp => {
         if (!grouped[emp.department]) grouped[emp.department] = [];
-        const match = emp.name.toLowerCase().includes(keyword) || 
-                      emp.department.toLowerCase().includes(keyword) ||
-                      emp.extension.includes(keyword);
-        if (match) grouped[emp.department].push(emp);
+        grouped[emp.department].push(emp);
       });
 
       let hasResults = false;
       Object.keys(grouped).sort().forEach(dept => {
-        if (grouped[dept].length === 0) return;
         hasResults = true;
-
         const section = document.createElement('div');
         section.className = `dept-section ${keyword ? 'active' : ''}`;
         
@@ -216,11 +201,11 @@
             <span class="chevron">▼</span>
           </div>
           <div class="dept-content">
-            ${grouped[dept].map(emp => `
+            ${grouped[dept].map(e => `
               <div class="employee-item">
-                <span class="emp-name">${emp.name}</span>
-                <span class="emp-info">Ext: ${emp.extension}</span>
-                ${emp.email ? `<a href="mailto:${emp.email}" class="emp-link">${emp.email}</a>` : ''}
+                <span class="emp-name">${e.name}</span>
+                <span class="emp-info">Ext: ${e.extension}</span>
+                ${e.email ? `<a href="mailto:${e.email}" class="emp-link">${e.email}</a>` : ''}
               </div>
             `).join('')}
           </div>
@@ -233,7 +218,7 @@
         container.appendChild(section);
       });
 
-      document.getElementById('noResults').style.display = hasResults ? 'none' : 'block';
+      document.getElementById('noResults').style.display = (hasResults || keyword === "") ? 'none' : 'block';
     }
 
     document.getElementById('searchInput').addEventListener('input', render);
